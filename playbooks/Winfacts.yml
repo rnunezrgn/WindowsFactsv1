@@ -1,0 +1,12 @@
+---
+- name: Windows Facts report
+  hosts: windows
+  tasks:
+    - name: "Gather Ansible Facts About Host"
+      setup:
+        gather_subset:
+          - 'all'
+    - name: "Debuging"
+      debug: 
+        msg: "{{ ansible_facts }}"
+        
