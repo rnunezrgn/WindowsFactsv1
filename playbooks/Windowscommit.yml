@@ -56,7 +56,7 @@
     - name: Set ALL new variables Facts
       ansible.builtin.set_fact:
         nodename: "{{ ansible_facts.nodename }}"
-        domain: "{{ ansible_facts.interfaces.dns_domain }}"
+        domain: "{{ ansible_facts.interfaces[0].dns_domain }}"
         windows_domain_member: "{{ ansible_facts.windows_domain_member }}"
         windows_domain_role: "{{ ansible_facts.windows_domain_role }}"
         distribution: "{{ ansible_facts.distribution }}"
