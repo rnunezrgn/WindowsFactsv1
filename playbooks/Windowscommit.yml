@@ -21,17 +21,16 @@
       ansible.builtin.setup:
         gather_subset:
           - all
-      register: my_ansible_facts
-      
-    - name: Debugging "my_ansible_facts" variable Fact
+
+    - name: Debugging "ansible_facts" variable Fact
       ansible.builtin.debug:
-        msg: "{{ my_ansible_facts }}"
+        msg: "{{ ansible_facts }}"
 
     - name: Create JSON-file with Ansible Facts
       copy:
         content: |
           {% for host in ansible_play_hosts %}
-          {{ hostvars[host].my_ansible_facts | to_nice_json }}
+          {{ hostvars[host].ansible_facts | to_nice_json }}
           {% endfor %}
         dest: ../documentation/servers/WINDOWS/json/server_facts.json
       delegate_to: localhost
@@ -41,7 +40,7 @@
       ansible.builtin.copy:
         content: |
           {% for host in ansible_play_hosts %}
-          {{ hostvars[host].my_ansible_facts | to_nice_yaml }}
+          {{ hostvars[host].ansible_facts | to_nice_yaml }}
           {% endfor %}
         dest: ../documentation/servers/WINDOWS/yaml/server_facts.yml
       delegate_to: localhost
@@ -56,34 +55,34 @@
 
     - name: Set ALL new variables Facts
       ansible.builtin.set_fact:
-        nodename: "{{ my_ansible_facts['nodename'] }}"
-        domain: "{{ my_ansible_facts['domain'] }}"
-        windows_domain_member: "{{ my_ansible_facts['windows_domain_member'] }}"
-        windows_domain_role: "{{ my_ansible_facts['windows_domain_role'] }}"
-        distribution: "{{ my_ansible_facts['distribution'] }}"
-        distribution_major_version: "{{ my_ansible_facts['distribution_major_version'] }}"
-        distribution_version: "{{ my_ansible_facts['distribution_version'] }}"
-        architecture: "{{ my_ansible_facts['architecture'] }}"
-        bios_date: "{{ my_ansible_facts['bios_date'] }}"
-        bios_version: "{{ my_ansible_facts['bios_version'] }}"
-      #  connection_name: "{{ my_ansible_facts | ['interfaces']['connection_name'] }}"
-      # connection_name: "{{ my_ansible_facts | ['interfaces']['interface_name'] }}"
+        nodename: "{{ ansible_facts.nodename }}"
+        domain: "{{ ansible_facts.interfaces.dns_domain }}"
+        windows_domain_member: "{{ ansible_facts['windows_domain_member'] }}"
+        windows_domain_role: "{{ ansible_facts['windows_domain_role'] }}"
+        distribution: "{{ ansible_facts['distribution'] }}"
+        distribution_major_version: "{{ ansible_facts['distribution_major_version'] }}"
+        distribution_version: "{{ ansible_facts['distribution_version'] }}"
+        architecture: "{{ ansible_facts['architecture'] }}"
+        bios_date: "{{ ansible_facts['bios_date'] }}"
+        bios_version: "{{ ansible_facts['bios_version'] }}"
+      #  connection_name: "{{ ansible_facts | ['interfaces']['connection_name'] }}"
+      # connection_name: "{{ ansible_facts | ['interfaces']['interface_name'] }}"
       #
-        connection_name: "{{ my_ansible_facts | community.general.json_query('ansible_interfaces[*].connection_name') }}"
-      #  interface_name: "{{ my_ansible_facts | community.general.json_query('interfaces[*].interface_name') }}"
-        ipv4_address: "{{ my_ansible_facts | community.general.json_query('ip_addresses[0]') }}"
-        ipv6_address: "{{ my_ansible_facts | community.general.json_query('ip_addresses[1]') }}"
-      #  default_gateway: "{{ my_ansible_facts | community.general.json_query('interfaces[*].default_gateway') }}"
-      #  mac_address: "{{ my_ansible_facts | community.general.json_query('interfaces[*].macaddress') }}"
-        lastboot: "{{ my_ansible_facts['lastboot'] }}"
-        reboot_pending: "{{ my_ansible_facts['reboot_pending'] }}"
-        uptime: "{{ my_ansible_facts['uptime_seconds'] }}"
-        machine_id: "{{ my_ansible_facts['machine_id'] }}"
-        total_memory: "{{ my_ansible_facts['memtotal_mb'] }}"
-        processor: "{{ my_ansible_facts | community.general.json_query('processor[1]') }}"
-        processor_cores: "{{ my_ansible_facts['processor_cores'] }}"
-        processor_count: "{{ my_ansible_facts['processor_count']}}"
-        product_name: "{{ my_ansible_facts['product_name'] }}"
+        connection_name: "{{ ansible_facts | community.general.json_query('ansible_interfaces[*].connection_name') }}"
+      #  interface_name: "{{ ansible_facts | community.general.json_query('interfaces[*].interface_name') }}"
+        ipv4_address: "{{ ansible_facts | community.general.json_query('ip_addresses[0]') }}"
+        ipv6_address: "{{ ansible_facts | community.general.json_query('ip_addresses[1]') }}"
+      #  default_gateway: "{{ ansible_facts | community.general.json_query('interfaces[*].default_gateway') }}"
+      #  mac_address: "{{ ansible_facts | community.general.json_query('interfaces[*].macaddress') }}"
+        lastboot: "{{ ansible_facts['lastboot'] }}"
+        reboot_pending: "{{ ansible_facts['reboot_pending'] }}"
+        uptime: "{{ ansible_facts['uptime_seconds'] }}"
+        machine_id: "{{ ansible_facts['machine_id'] }}"
+        total_memory: "{{ ansible_facts['memtotal_mb'] }}"
+        processor: "{{ ansible_facts | community.general.json_query('processor[1]') }}"
+        processor_cores: "{{ ansible_facts['processor_cores'] }}"
+        processor_count: "{{ ansible_facts['processor_count']}}"
+        product_name: "{{ ansible_facts['product_name'] }}"
 
 
 - name: Git-Add-Commit-Push
