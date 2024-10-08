@@ -67,9 +67,9 @@
         bios_date: "{{ my_ansible_facts['bios_date'] }}"
         bios_version: "{{ my_ansible_facts['bios_version'] }}"
       #  connection_name: "{{ my_ansible_facts | ['interfaces']['connection_name'] }}"
-        connection_name: "{{ my_ansible_facts | ['interfaces']['interface_name'] }}"
+      # connection_name: "{{ my_ansible_facts | ['interfaces']['interface_name'] }}"
       #
-      # connection_name: "{{ my_ansible_facts | community.general.json_query('interfaces[*].connection_name') }}"
+        connection_name: "{{ my_ansible_facts | community.general.json_query('ansible_interfaces[*].connection_name') }}"
       #  interface_name: "{{ my_ansible_facts | community.general.json_query('interfaces[*].interface_name') }}"
         ipv4_address: "{{ my_ansible_facts | community.general.json_query('ip_addresses[0]') }}"
         ipv6_address: "{{ my_ansible_facts | community.general.json_query('ip_addresses[1]') }}"
