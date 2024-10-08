@@ -83,7 +83,7 @@
 
     - name: Print ALL new elements
       ansible.builtin.debug:
-            msg: 
+            msg:
               node_name: "{{ nodename }}"
               dns_domain: "{{ domain }}"
               windows_domains_member: "{{ windows_domain_member }}"
@@ -92,24 +92,111 @@
               ipv4: "{{ ipv4_address }}"
               ipv6: "{{ ipv6_address }}"
 
+    - name: Create CSV file with results
+      copy:
+        content: |
+          {% for host in ansible_play_hosts %}
+          {{ hostvars[host].nodename }},{{ hostvars[host].domain }},{{ hostvars[host].windows_domain_member }},{{ hostvars[host].windows_domain_role }}, {{ hostvars[host].distribution }},{{ hostvars[host].distribution_major_version }},{{ hostvars[host].distribution_version }},{{ hostvars[host].architecture }},{{ hostvars[host].bios_date }},{{ hostvars[host].bios_version }},{{ hostvars[host].connection_name }},{{ hostvars[host].interface_name }},{{ hostvars[host].ipv4_address }},{{ hostvars[host].ipv6_address }},{{ hostvars[host].default_gateway }},{{ hostvars[host].mac_address }},{{ hostvars[host].lastboot }},{{ hostvars[host].reboot_pending }},{{ hostvars[host].uptime }},{{ hostvars[host].machine_id }},{{ hostvars[host].total_memory }},{{ hostvars[host].processor }},{{ hostvars[host].processor_cores }},{{ hostvars[host].processor_count }},{{ hostvars[host].product_name }}
+          {% endfor %}
+        dest: ../documentation/servers/WINDOWS/csv/server_facts.csv
+      delegate_to: localhost
+      run_once: true
 
-#- name: Git-Add-Commit-Push
-#  hosts: student1-ansible-1
-#  vars:
-#    git_commit: 'Recording variables'
-#    git_message: 'Lets see all variables'
-#  tasks:
-#    - name: Set git_message
-#      ansible.builtin.set_fact:
-#        git_message: "{{ git_commit }}"
-#
-#    - name: Git-Addition 
-#      ansible.builtin.shell: git add ../*
-#      delegate_to: localhost
+    - name: Format CSV File 1st Clean Up.
+      replace:
+        path: ../documentation/servers/WINDOWS/csv/server_facts.csv
+        regexp: '\[|\]|"'
+        replace: ''
+      delegate_to: localhost
+      run_once: true
 
-#    - name: Git-commiting
-#      ansible.builtin.shell: git commit -m "{{ git_message }}"
-#      delegate_to: localhost
-#    - name: Git-pushing
-#      ansible.builtin.shell: git push
-#      delegate_to: localhost 
+    - name: Format CSV File 2nd Clean Up
+      replace:
+        path: ../documentation/servers/WINDOWS/csv/server_facts.csv
+        regexp: "'"
+        replace: ''
+      delegate_to: localhost
+      run_once: true
+
+    - name: Header Row to CSV file.
+      lineinfile:
+        path: ../documentation/servers/WINDOWS/csv/server_facts.csv
+        insertbefore: BOF
+        line: Hostname,Domain,Domain Member,Domain Role,OS,Major Version,Version,Architecture,Bios Date,Bios Version,Connection Names,Interface Names,IPv4 Address,IPv6 Address,Default Gateway,MAC Address,Last Boot,Reboot Pending,Uptime Seconds,Machine ID,Total Memory (MB),Processors,Processor Cores,Processor Count,Product Name
+      delegate_to: localhost
+
+    - name: Create Markdown
+      copy:
+        content: |
+          {% for host in ansible_play_hosts %}
+          | {{ hostvars[host].nodename }} | {{ hostvars[host].domain }} | {{ hostvars[host].windows_domain_member }} | {{ hostvars[host].windows_domain_role }} |  {{ hostvars[host].distribution }} | {{ hostvars[host].distribution_major_version }} | {{ hostvars[host].distribution_version }} | {{ hostvars[host].architecture }} | {{ hostvars[host].bios_date }} | {{ hostvars[host].bios_version }} | {{ hostvars[host].connection_name }} | {{ hostvars[host].interface_name }} | {{ hostvars[host].ipv4_address }} | {{ hostvars[host].ipv6_address }} | {{ hostvars[host].default_gateway }} | {{ hostvars[host].mac_address }} | {{ hostvars[host].lastboot }} | {{ hostvars[host].reboot_pending }} | {{ hostvars[host].uptime }} | {{ hostvars[host].machine_id }} | {{ hostvars[host].total_memory }} | {{ hostvars[host].processor }} | {{ hostvars[host].processor_cores }} | {{ hostvars[host].processor_count }} | {{ hostvars[host].product_name }} |
+          {% endfor %}
+        dest: ../documentation/servers/WINDOWS/markdown/server_facts.md
+      delegate_to: localhost
+      run_once: true
+    
+    - name: Format Markdown File New Lines.
+      replace:
+        path: ../documentation/servers/WINDOWS/markdown/server_facts.md
+        regexp: '],'
+        replace: ']\n'
+      delegate_to: localhost
+      run_once: true
+
+    - name: Format Markdown File Clean Up.
+      replace:
+        path: ../documentation/servers/WINDOWS/markdown/server_facts.md
+        regexp: '\[|\]|"'
+        replace: ''
+      delegate_to: localhost
+      run_once: true
+
+    - name: Format Markdown File Commas to Pipes.
+      replace:
+        path: ../documentation/servers/WINDOWS/markdown/server_facts.md
+        regexp: ','
+        replace: ' | '
+      delegate_to: localhost
+      run_once: true
+
+    - name: Format Markdown File Clean Up.
+      replace:
+        path: ../documentation/servers/WINDOWS/markdown/server_facts.md
+        regexp: "'"
+        replace: ''
+      delegate_to: localhost
+      run_once: true
+
+    - name: Header Row to Markdown.
+      lineinfile:
+        path: ../documentation/servers/WINDOWS/markdown/server_facts.md
+        insertbefore: BOF
+        line: "{{ item.property }}"
+      with_items:
+        - { property: '| -------- | ------ | ------------- | ----------- | -- | ------------- | ------- | ------------ | --------- | ------------ | ---------------- | --------------- | ---- | ---- | --------------- | ----------- | --------- | -------------- | -------------- | ---------- | ----------------- | ---------- | --------------- | --------------- | ------------ |' }
+        - { property: '| Hostname | Domain | Domain Member | Domain Role | OS | Major Version | Version | Architecture | Bios Date | Bios Version | Connection Names | Interface Names | IPv4 | IPv6 | Default Gateway | MAC Address | Last Boot | Reboot Pending | Uptime Seconds | Machine ID | Total Memory (MB) | Processors | Processor Cores | Processor Count | Product Name |' }
+        - { property: '# Windows' }
+      delegate_to: localhost
+
+    - name: Create server_facts Mind Map.
+      shell: "markmap --no-open ../documentation/servers/WINDOWS/markdown/server_facts.md -o ../documentation/SERVERS/WINDOWS/mindmap/server_facts.html"
+      register: markmap
+      delegate_to: localhost
+
+    - name: Clone GIT Repository
+      ansible.builtin.git:
+        repo: git@github.com/rnunezrgn/WindowsFactsv1.git
+        dest: /tmp/my_repo
+        clone: true
+        force: true
+        accept_hostkey: true
+      environment:
+        GIT_ASKPASS: /bin/echo
+        GIT_USERNAME: "{{ MY_GIT_USERNAME }}"
+        GIT_PASSWORD: "{{ MY_GIT_PASSWORD }}"
+      #  update: yes
+    - name: "Add output directory to git"
+      ansible.builtin.shell: |
+        git config --global user.name "rnunezrgn"
+        git config --global user.email "rnunez@redhat.com"
+        git add ../* && git commit -m "Lets commit " && git push
