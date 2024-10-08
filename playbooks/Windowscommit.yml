@@ -57,52 +57,48 @@
       ansible.builtin.set_fact:
         nodename: "{{ ansible_facts.nodename }}"
         domain: "{{ ansible_facts.interfaces.dns_domain }}"
-        windows_domain_member: "{{ ansible_facts['windows_domain_member'] }}"
-        windows_domain_role: "{{ ansible_facts['windows_domain_role'] }}"
-        distribution: "{{ ansible_facts['distribution'] }}"
-        distribution_major_version: "{{ ansible_facts['distribution_major_version'] }}"
-        distribution_version: "{{ ansible_facts['distribution_version'] }}"
-        architecture: "{{ ansible_facts['architecture'] }}"
-        bios_date: "{{ ansible_facts['bios_date'] }}"
-        bios_version: "{{ ansible_facts['bios_version'] }}"
-      #  connection_name: "{{ ansible_facts | ['interfaces']['connection_name'] }}"
-      # connection_name: "{{ ansible_facts | ['interfaces']['interface_name'] }}"
-      #
-        connection_name: "{{ ansible_facts | community.general.json_query('ansible_interfaces[*].connection_name') }}"
-      #  interface_name: "{{ ansible_facts | community.general.json_query('interfaces[*].interface_name') }}"
-        ipv4_address: "{{ ansible_facts | community.general.json_query('ip_addresses[0]') }}"
-        ipv6_address: "{{ ansible_facts | community.general.json_query('ip_addresses[1]') }}"
-      #  default_gateway: "{{ ansible_facts | community.general.json_query('interfaces[*].default_gateway') }}"
-      #  mac_address: "{{ ansible_facts | community.general.json_query('interfaces[*].macaddress') }}"
-        lastboot: "{{ ansible_facts['lastboot'] }}"
-        reboot_pending: "{{ ansible_facts['reboot_pending'] }}"
-        uptime: "{{ ansible_facts['uptime_seconds'] }}"
-        machine_id: "{{ ansible_facts['machine_id'] }}"
-        total_memory: "{{ ansible_facts['memtotal_mb'] }}"
-        processor: "{{ ansible_facts | community.general.json_query('processor[1]') }}"
-        processor_cores: "{{ ansible_facts['processor_cores'] }}"
-        processor_count: "{{ ansible_facts['processor_count']}}"
-        product_name: "{{ ansible_facts['product_name'] }}"
+        windows_domain_member: "{{ ansible_facts.windows_domain_member }}"
+        windows_domain_role: "{{ ansible_facts.windows_domain_role }}"
+        distribution: "{{ ansible_facts.distribution }}"
+        distribution_major_version: "{{ ansible_facts.distribution_major_version }}"
+        distribution_version: "{{ ansible_facts.distribution_version }}"
+        architecture: "{{ ansible_factsarchitecture }}"
+        bios_date: "{{ ansible_facts.bios_date }}"
+        bios_version: "{{ ansible_facts.bios_version }}"
+        connection_name: "{{ ansible_facts.interfaces.connection_name }}"
+        interface_name: "{{ ansible_facts.interfaces.interface_name }}"
+        ipv4_address: "{{ ansible_facts.interfaces.ipv4.address }}"
+        ipv6_address: "{{ ansible_facts.interfaces.ipv6.address }}"
+        default_gateway: "{{ ansible_facts.interfaces.default_gateway }}"
+        mac_address: "{{ ansible_facts.interfaces.macaddress }}"
+        lastboot: "{{ ansible_facts.lastboot }}"
+        reboot_pending: "{{ ansible_facts.reboot_pending }}"
+        uptime: "{{ ansible_facts.uptime_seconds }}"
+        machine_id: "{{ ansible_facts.machine_id }}"
+        total_memory: "{{ ansible_facts.memtotal_mb }}"
+        processor: "{{ ansible_facts.env.PROCESSOR_IDENTIFIER }}"
+        processor_cores: "{{ ansible_facts.processor_cores }}"
+        processor_count: "{{ ansible_facts.processor_count }}"
+        product_name: "{{ ansible_facts.product_name }}"
 
 
-- name: Git-Add-Commit-Push
-  hosts: student1-ansible-1
-  vars:
-    git_commit: 'Recording variables'
-    git_message: 'Lets see all variables'
-  tasks:
-    - name: Set git_message
-      ansible.builtin.set_fact:
-        git_message: "{{ git_commit }}"
+#- name: Git-Add-Commit-Push
+#  hosts: student1-ansible-1
+#  vars:
+#    git_commit: 'Recording variables'
+#    git_message: 'Lets see all variables'
+#  tasks:
+#    - name: Set git_message
+#      ansible.builtin.set_fact:
+#        git_message: "{{ git_commit }}"
+#
+#    - name: Git-Addition 
+#      ansible.builtin.shell: git add ../*
+#      delegate_to: localhost
 
-    - name: Git-Addition 
-      ansible.builtin.shell: git add ../*
-      delegate_to: localhost
-
-    - name: Git-commiting
-      ansible.builtin.shell: git commit -m "{{ git_message }}"
-      delegate_to: localhost
-
-    - name: Git-pushing
-      ansible.builtin.shell: git push
-      delegate_to: localhost 
+#    - name: Git-commiting
+#      ansible.builtin.shell: git commit -m "{{ git_message }}"
+#      delegate_to: localhost
+#    - name: Git-pushing
+#      ansible.builtin.shell: git push
+#      delegate_to: localhost 
