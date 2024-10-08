@@ -1,0 +1,72 @@
+---
+- name: Windows Facts report
+  hosts: windows
+
+  tasks:
+    - name: Register User Name.
+      ansible.builtin.set_fact:
+        windows_user: "{{ ansible_user }}"
+      no_log: true
+      delegate_to: localhost
+      run_once: true
+
+    - name: Register Password.
+      ansible.builtin.set_fact:
+        windows_password: "{{ ansible_password }}"
+      no_log: true
+      delegate_to: localhost
+      run_once: true
+
+    - name: Gather Ansible Facts About Host.
+      setup:
+        gather_subset:
+          - all
+    - name: Debugging Facts
+      ansible.builtin.debug:
+        var: "{{ ansible_facts }}"
+
+    - name: Create JSON file with Ansible Facts.
+      copy:
+        content: |
+          {% for host in ansible_play_hosts %}
+          {{ hostvars[host].ansible_facts | to_nice_json }}
+          {% endfor %}
+        dest: ../documentation/servers/WINDOWS/json/server_facts.json
+      delegate_to: localhost
+      run_once: true
+
+    - name: Create YAML file with Ansible_fact.
+      ansible.builtin.copy:
+        content: |
+          {% for host in ansible_play_hosts %}
+          {{ hostvars[host].ansible_facts | to_nice_yaml }}
+          {% endfor %}
+        dest: ../documentation/servers/WINDOWS/yaml/server_facts.yml
+      delegate_to: localhost
+      run_once: true
+
+    - name: Add Headers row to YAML file.
+      lineinfile:
+        path: ../documentation/servers/WINDOWS/yaml/server_facts.yml
+        insertbefore: BOF
+        line: ---
+      delegate_to: localhost
+
+- name: Git-Add-Commit-Push
+  hosts: localhost
+  vars:
+    git_commit: 'Recording variables'
+    git_message: 'Lets see all variables'
+  tasks:
+    - name: Set git_message
+      ansible.builtin.set_fact:
+        git_message: "{{ git_commit }}"
+
+    - name: Git-Add
+      ansible.builtin.shell: git add ../*
+
+    - name: Git - commit
+      ansible.builtin.shell: git commit -m "{{ git_message }}"
+
+    - name: Git - push
+      ansible.builtin.shell: git push
