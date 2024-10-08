@@ -189,7 +189,7 @@
 
     - name: Clone GIT Repository
       ansible.builtin.git:
-        repo: git@github.com/rnunezrgn/WindowsFactsv1.git
+        repo: git@github.com/rnunezrgn/WindowsFactsv1
         dest: /tmp/
         clone: true
         force: true
