@@ -18,18 +18,19 @@
       run_once: true
 
     - name: Gather Ansible Facts About Host
-      setup:
+      ansible.builtin.setup:
         gather_subset:
           - all
+      
     - name: Debugging Facts
       ansible.builtin.debug:
-        var: "{{ ansible_facts }}"
+        var: "{{ my_ansible_facts }}"
 
     - name: Create JSON-file with Ansible Facts
       copy:
         content: |
           {% for host in ansible_play_hosts %}
-          {{ hostvars[host].ansible_facts | to_nice_json }}
+          {{ hostvars[host].my_ansible_facts | to_nice_json }}
           {% endfor %}
         dest: ../documentation/servers/WINDOWS/json/server_facts.json
       delegate_to: localhost
@@ -39,7 +40,7 @@
       ansible.builtin.copy:
         content: |
           {% for host in ansible_play_hosts %}
-          {{ hostvars[host].ansible_facts | to_nice_yaml }}
+          {{ hostvars[host].my_ansible_facts | to_nice_yaml }}
           {% endfor %}
         dest: ../documentation/servers/WINDOWS/yaml/server_facts.yml
       delegate_to: localhost
