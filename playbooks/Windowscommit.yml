@@ -186,14 +186,14 @@
     - name: Set ALL new variables Facts
       ansible.builtin.set_fact:
         ansible_python_interpreter: "/usr/bin/python"
-        
+
     - name: Clone GIT Repository
       ansible.builtin.git:
         repo: git@github.com/rnunezrgn/WindowsFactsv1.git
         dest: /tmp/my_repo
         clone: true
         force: true
-        accept_hostkey: true
+      #  accept_hostkey: true
       environment:
         GIT_ASKPASS: /bin/echo
         GIT_USERNAME: "{{ MY_GIT_USERNAME }}"
