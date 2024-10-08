@@ -23,7 +23,7 @@
           - all
       register: my_ansible_facts
       
-    - name: Debugging Facts
+    - name: Debugging "my_ansible_facts" variable Fact
       ansible.builtin.debug:
         var: "{{ my_ansible_facts }}"
 
