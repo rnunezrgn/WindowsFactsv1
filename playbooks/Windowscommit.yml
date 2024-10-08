@@ -25,7 +25,7 @@
       
     - name: Debugging "my_ansible_facts" variable Fact
       ansible.builtin.debug:
-        msg: "{{ my_ansible_facts.stdout }}"
+        msg: "{{ my_ansible_facts }}"
 
     - name: Create JSON-file with Ansible Facts
       copy:
