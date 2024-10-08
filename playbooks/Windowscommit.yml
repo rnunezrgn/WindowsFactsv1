@@ -76,7 +76,7 @@
         uptime: "{{ ansible_facts.uptime_seconds }}"
         machine_id: "{{ ansible_facts.machine_id }}"
         total_memory: "{{ ansible_facts.memtotal_mb }}"
-        processor: "{{ ansible_facts.env[0].PROCESSOR_IDENTIFIER }}"
+        processor: "{{ ansible_facts.env.PROCESSOR_IDENTIFIER }}"
         processor_cores: "{{ ansible_facts.processor_cores }}"
         processor_count: "{{ ansible_facts.processor_count }}"
         product_name: "{{ ansible_facts.product_name }}"
@@ -86,6 +86,7 @@
             msg: 
               node_name: "{{ nodename }}"
               dns_domain: "{{ domain }}"
+              windows_domain_member: "{{ windows_domain_member }}"
 
 
 #- name: Git-Add-Commit-Push
