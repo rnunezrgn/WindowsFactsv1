@@ -86,7 +86,11 @@
             msg: 
               node_name: "{{ nodename }}"
               dns_domain: "{{ domain }}"
-              windows_domain_member: "{{ windows_domain_member }}"
+              windows_domains_member: "{{ windows_domain_member }}"
+              connectiones_name: "{{ connection_name }}"
+              enterfaces_name: "{{ interface_name }}"
+              ipv4: "{{ ipv4_address }}"
+              ipv6: "{{ ipv6_address }}"
 
 
 #- name: Git-Add-Commit-Push
