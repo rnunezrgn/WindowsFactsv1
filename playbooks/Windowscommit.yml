@@ -64,11 +64,14 @@
       ansible.builtin.set_fact:
         git_message: "{{ git_commit }}"
 
-    - name: Git-Addition
+    - name: Git-Addition 
       ansible.builtin.shell: git add ../*
+      delegate_to: localhost
 
-    - name: Git - commiting
+    - name: Git-commiting
       ansible.builtin.shell: git commit -m "{{ git_message }}"
+      delegate_to: localhost
 
-    - name: Git - pushing
-      ansible.builtin.shell: git push 
+    - name: Git-pushing
+      ansible.builtin.shell: git push
+      delegate_to: localhost 
