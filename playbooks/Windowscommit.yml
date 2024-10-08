@@ -55,7 +55,7 @@
       delegate_to: localhost
 
 - name: Git-Add-Commit-Push
-  hosts: localhost
+  hosts: student1-ansible-1
   vars:
     git_commit: 'Recording variables'
     git_message: 'Lets see all variables'
