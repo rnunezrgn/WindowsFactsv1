@@ -241,7 +241,7 @@
 
     - name: "Push changes from local repo to Git repo"
       ansible.builtin.shell: |
-        git push --set-upstream . master
+        git push --set-upstream-to . master
 #        git push "https://{{ MY_GIT_USERNAME }}:{{ MY_GIT_PASSWORD }}@github.com/rnunezrgn/WindowsFactsv1"
 #        git push https://github.com/rnunezrgn/WindowsFactsv1.git
         
