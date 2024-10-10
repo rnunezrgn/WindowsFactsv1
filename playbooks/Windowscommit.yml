@@ -223,11 +223,24 @@
         repo: https://github.com/rnunezrgn/WindowsFactsv1
         dest: /tmp/myrepo
 
-    - name: "Add output directory to git" 
+    - name: "Configure global GIT user.name" 
       ansible.builtin.shell: |
         git config --global user.name "rnunezrgn"
+
+    - name: "Configure global GIT user.email" 
+      ansible.builtin.shell: |
         git config --global user.email "rnunez@redhat.com"
+
+    - name: "Add output directory and files to git" 
+      ansible.builtin.shell: |
         git add ../* 
+
+    - name: "Git commit changes with message" 
+      ansible.builtin.shell: |
         git commit -m "Lets commit "
+
+    - name: "Push changes from local repo to Git repo".
+      ansible.builtin.shell: |
         git push 
+        # git push "https://"{{ MY_GIT_USERNAME }}:{{ MY_GIT_PASSWORD }}"@github.com/rnunezrgn/WindowsFactsv1"
 
