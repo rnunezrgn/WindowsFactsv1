@@ -1,6 +1,6 @@
 ---
 - name: Windows Facts report
-  hosts: windows
+  hosts: all
   tasks:
     - name: "Gather Ansible Facts About Host"
       setup:
