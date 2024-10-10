@@ -1,6 +1,6 @@
 ---
 - name: Windows Facts report
-  hosts: windows
+  hosts: all
   # Task will use the Ansible Controller template credential to pass device's uid and password#
 
   tasks:
