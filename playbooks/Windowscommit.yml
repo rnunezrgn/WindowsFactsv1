@@ -187,7 +187,7 @@
       ansible.builtin.set_fact:
         ansible_python_interpreter: "/usr/bin/python"
 
-    - name: Clone GIT Repository via shell
+    #- name: Clone GIT Repository via shell
     #  ansible.builtin.shell:
     #    git clone https://github.com/rnunezrgn/WindowsFactsv1
     ##  ansible.builtin.git:
