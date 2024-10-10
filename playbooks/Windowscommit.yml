@@ -239,8 +239,8 @@
       ansible.builtin.shell: |
         git commit -m "Lets commit "
 
-    - name: "Push changes from local repo to Git repo".
+    - name: "Push changes from local repo to Git repo"
       ansible.builtin.shell: |
         git push 
-        # git push "https://"{{ MY_GIT_USERNAME }}:{{ MY_GIT_PASSWORD }}"@github.com/rnunezrgn/WindowsFactsv1"
+# git push "https://"{{ MY_GIT_USERNAME }}:{{ MY_GIT_PASSWORD }}"@github.com/rnunezrgn/WindowsFactsv1"
 
