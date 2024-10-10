@@ -217,7 +217,7 @@
     - name: Pullfrom git
       ansible.builtin.git:
         repo: https://github.com/rnunezrgn/WindowsFactsv1
-        dest: /tmp
+        dest: /tmp/myrepo
 
     - name: "Add output directory to git"  
       ansible.builtin.shell: |
