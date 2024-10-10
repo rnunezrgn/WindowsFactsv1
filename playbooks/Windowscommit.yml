@@ -231,25 +231,3 @@
         git commit -m "Lets commit "
         git push 
 
-    - name: "Add output directory to git"  
-      ansible.builtin.shell: |
-        git config --global user.name "rnunezrgn"
-        git config --global user.email "rnunez@redhat.com"
-        git add ../* 
-        git commit -m "Lets commit "
-        git push
-    - name: "Add output directory to git"  
-      ansible.builtin.shell: |
-        git config --global user.name "rnunezrgn"
-        git config --global user.email "rnunez@redhat.com"
-        git add ../* 
-        git commit -m "Lets commit "
-        git push
-    - name: "Add output directory to git"  
-      ansible.builtin.shell: |
-        git config --global user.name "rnunezrgn"
-        git config --global user.email "rnunez@redhat.com"
-        git add ../* 
-        git commit -m "Lets commit "
-        git push
-
