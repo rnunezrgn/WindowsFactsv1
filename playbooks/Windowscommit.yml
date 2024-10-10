@@ -233,7 +233,7 @@
 
     - name: "Add output directory and files to git" 
       ansible.builtin.shell: |
-        git add ../* 
+        git add * 
 
     - name: "Git commit changes with message" 
       ansible.builtin.shell: |
