@@ -1,6 +1,6 @@
 ---
 - name: Windows Facts report
-  hosts: windows
+  hosts: all
 
   tasks:
     - name: Register User Name
