@@ -214,9 +214,9 @@
 - name: Registering all in GIT
   hosts: localhost
   tasks:
-    - name: "Add output directory to git"  
+    - name: "Init REPOSITORY!!!!"  
       ansible.builtin.shell: |
-        git config --global user.name "rnunezrgn"
+        git init
 
     - name: Pull-from git
       ansible.builtin.git:
