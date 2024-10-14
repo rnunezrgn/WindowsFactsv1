@@ -4,6 +4,7 @@
   vars:
     gituid: ''
     gitemail: ''
+    gitcomment: ''
 
   tasks:
     - name: Register User Name
