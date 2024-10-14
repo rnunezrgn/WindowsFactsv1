@@ -1,6 +1,9 @@
 ---
 - name: Windows Facts report
   hosts: all
+  vars:
+    gituid: ''
+    gitemail: ''
 
   tasks:
     - name: Register User Name
@@ -189,10 +192,10 @@
 
     #- name: Clone GIT Repository via shell
     #  ansible.builtin.shell:
-    #    git clone https://github.com/rnunezrgn/WindowsFactsv1
+    #    git clone https://github.com/{{ gitui }}/WindowsFactsv1
     ##  ansible.builtin.git:
-    #    repo: git@github.com/rnunezrgn/WindowsFactsv1
-    ##    repo: https://github.com/rnunezrgn/WindowsFactsv1
+    #    repo: git@github.com/{{ gitui }}/WindowsFactsv1
+    ##    repo: https://github.com/{{ gitui }}/WindowsFactsv1
     ##    dest: /tmp/
     #    clone: true
     #    force: true
@@ -204,8 +207,8 @@
     #  #  update: yes
     ##- name: "Add output directory to git"
     #  ansible.builtin.shell: |
-     #   git config --global user.name "rnunezrgn"
-    #    git config --global user.email "rnunez@redhat.com"
+     #   git config --global user.name "{{ gitui }}"
+    #    git config --global user.email "{{ gitemail }}"
     #    git add ../* 
     #    git commit -m "Lets commit "
     #    git push
@@ -220,16 +223,16 @@
 
     - name: Pull-from git
       ansible.builtin.git:
-        repo: https://github.com/rnunezrgn/WindowsFactsv1
+        repo: https://github.com/{{ gitui }}/WindowsFactsv1
         dest: /tmp/myrepo
 
     - name: "Configure global GIT user.name" 
       ansible.builtin.shell: |
-        git config --global user.name "rnunezrgn"
+        git config --global user.name "{{ gitui }}"
 
     - name: "Configure global GIT user.email" 
       ansible.builtin.shell: |
-        git config --global user.email "rnunez@redhat.com"
+        git config --global user.email "{{ gitemail }}"
 
     - name: "Add output directory and files to git" 
       ansible.builtin.shell: |
@@ -242,5 +245,5 @@
     - name: "Push changes from local repo to Git repo"
       ansible.builtin.shell: |
         git push . master
-#        git push "https://{{ MY_GIT_USERNAME }}:{{ MY_GIT_PASSWORD }}@github.com/rnunezrgn/WindowsFactsv1"
-#        git push https://github.com/rnunezrgn/WindowsFactsv1.git
+#        git push "https://{{ MY_GIT_USERNAME }}:{{ MY_GIT_PASSWORD }}@github.com/{{ gitui }}/WindowsFactsv1"
+#        git push https://github.com/{{ gitui }}/WindowsFactsv1.git
