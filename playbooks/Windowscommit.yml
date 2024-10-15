@@ -204,7 +204,7 @@
     #  environment:
     #    GIT_ASKPASS: /bin/echo
     #    GIT_USERNAME: "{{ MY_GIT_USERNAME }}"
-    #    GIT_PASSWORD: "{{ MY_GIT_PASSWORD }}"
+    #    GIT_PASSWORD: "{{ MY_GIT_PASSWORD }}""Lets commit "
     #  #  update: yes
     ##- name: "Add output directory to git"
     #  ansible.builtin.shell: |
@@ -248,7 +248,7 @@
 
     - name: "Git commit changes with message" 
       ansible.builtin.shell: |
-        git commit -m "Lets commit "
+        git commit -m "{{ gitcomment }}"
 
     - name: "Push changes from local repo to Git repo"
       ansible.builtin.shell: |
