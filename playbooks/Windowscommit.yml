@@ -224,20 +224,20 @@
 
     - name: Pull-from git
       ansible.builtin.git:
-        repo: https://github.com/{{ gitui }}/WindowsFactsv1
+        repo: https://github.com/{{ gituid }}/WindowsFactsv1
         dest: /tmp/myrepo
 
     - name: "Configure global GIT user.name" 
       ansible.builtin.shell: |
-        git config --global user.name "{{ gitui }}"
+        git config --global user.name "{{ gituid }}"
 
     - name: "Configure global GIT user.email" 
       ansible.builtin.shell: |
         git config --global user.email "{{ gitemail }}"
 
     - name: "Check git status" 
-        ansible.builtin.shell: |
-          git status
+      ansible.builtin.shell: |
+        git status
   
     - name: "Add output directory and files to git" 
       ansible.builtin.shell: |
@@ -253,5 +253,5 @@
     - name: "Push changes from local repo to Git repo"
       ansible.builtin.shell: |
         git push . master
-#        git push "https://{{ MY_GIT_USERNAME }}:{{ MY_GIT_PASSWORD }}@github.com/{{ gitui }}/WindowsFactsv1"
+#        git push "https://{{MY_GIT_USERNAME}}:{{MY_GIT_PASSWORD}}@github.com/{{ gitui }}/WindowsFactsv1"
 #        git push https://github.com/{{ gitui }}/WindowsFactsv1.git
