@@ -241,9 +241,14 @@
   
     - name: "Add output directory and files to git" 
       ansible.builtin.shell: |
-#        git add *
         git add ../documentation/servers/WINDOWS/markdown/server_facts.md
-        git add ../documentation/servers/WINDOWS/csv/server_facts.csv
+  
+    - name: "Add output directory and files to git" 
+      ansible.builtin.shell: |
+          git add ../documentation/servers/WINDOWS/csv/server_facts.csv
+  
+    - name: "Add output directory and files to git" 
+      ansible.builtin.shell: |
         git add ../documentation/servers/WINDOWS/yaml/server_facts.yml
 
     - name: "Git commit changes with message" 
