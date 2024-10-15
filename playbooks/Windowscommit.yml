@@ -220,7 +220,8 @@
   tasks:
     - name: "Check PEPE file"
       shell: cat /var/pepe
-      
+      delegate_to: localhost
+
     - name: "Init REPOSITORY!!!!"  
       ansible.builtin.shell: |
         git init
@@ -231,8 +232,8 @@
         dest: /tmp/myrepo
 
     - name: "Configure global GIT user.name" 
-      ansible.builtin.shell: |
-        git config --global user.name "{{ gituid }}"
+      ansible.builtin.shell:
+        cmd: git config --global user.name "{{ gituid }}"
 
     - name: "Configure global GIT user.email" 
       ansible.builtin.shell: |
