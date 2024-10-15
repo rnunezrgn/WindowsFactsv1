@@ -218,6 +218,9 @@
 - name: Registering all in GIT
   hosts: localhost
   tasks:
+    - name: "Check PEPE file"
+      shell: cat /var/pepe
+      
     - name: "Init REPOSITORY!!!!"  
       ansible.builtin.shell: |
         git init
