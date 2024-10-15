@@ -241,7 +241,7 @@
   
     - name: "Add output directory and files to git" 
       ansible.builtin.shell: |
-      #  git add *
+#        git add *
         git add ../documentation/servers/WINDOWS/markdown/server_facts.md
         git add ../documentation/servers/WINDOWS/csv/server_facts.csv
         git add ../documentation/servers/WINDOWS/yaml/server_facts.yml
@@ -253,5 +253,5 @@
     - name: "Push changes from local repo to Git repo"
       ansible.builtin.shell: |
         git push . master
-#        git push "https://{{MY_GIT_USERNAME}}:{{MY_GIT_PASSWORD}}@github.com/{{ gitui }}/WindowsFactsv1"
+#        git push "https://{{MY_GIT_USERNAME}}:{{MY_GIT_PASSWORD}}@github.com/{{ gitui }}/WindowsFactsv1 --all"
 #        git push https://github.com/{{ gitui }}/WindowsFactsv1.git
