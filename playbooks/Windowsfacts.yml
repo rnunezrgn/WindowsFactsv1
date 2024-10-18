@@ -192,7 +192,7 @@
           {% for myvar in myvar.split(';') %}
             - {{ myvar }}
           {% endfor %}
-
+...
 #    - name: Supress \n to show each line
 #      ansible.builtin.debug:
 #        msg={{ myvar | split(";") }} 
