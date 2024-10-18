@@ -185,4 +185,4 @@
     
     - name: Supress \n to show each line
       ansible.builtin.debug:
-        msg={{ file_results.stdout.split('\n)') }}
+        msg={{ file_results.stdout | split('\n') }}
