@@ -189,8 +189,8 @@
       ansible.builtin.debug:
         msg: |
           Requiredmyvar:
-          {% for myvar in myvar.split(';') %}
-            - {{ myvar }}
+          {% for myv in myvar.split(';') %}
+            - {{ myv }}
           {% endfor %}
 ...
 #    - name: Supress \n to show each line
