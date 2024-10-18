@@ -182,7 +182,7 @@
 
     - name: Display file 
       ansible.builtin.debug:
-        var: lookup('ansible.builtin.file', '../documentation/servers/WINDOWS/markdown/server_facts.md') | trim
+        var: "{{ lookup('ansible.builtin.file', '../documentation/servers/WINDOWS/markdown/server_facts.md') | trim }}"
       register: myvar
     
     - name: Supress \n to show each line
