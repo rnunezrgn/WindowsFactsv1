@@ -185,3 +185,8 @@
     - name: Display file 
       ansible.builtin.debug:
         var: lookup('ansible.builtin.file', '../documentation/servers/WINDOWS/markdown/server_facts.md')
+      register: file_results
+    
+    - name: Supress \n to show each line:
+      ansible.builtin.debug:
+        msg={{ file_results.stdout.split('\n)')[:-1] }}
