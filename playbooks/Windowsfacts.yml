@@ -185,14 +185,6 @@
         var: "{{ lookup('ansible.builtin.file', '../documentation/servers/WINDOWS/markdown/server_facts.md') | replace('\n', ';') }}"
       register: myvar
 
-#    - name: Supress unnecesary characters
-#      ansible.builtin.debug:
-#        msg: |
-#          Requiredmyvar:
-#          {% for myv in myvar.split(';') %}
-#           - {{ myv }}
-#          {% endfor %}
-
-    - name: Supress \n to show each line
+    - name: Show myvar
       ansible.builtin.debug:
-        var=myvar.stdout_split
+        var=myvar
