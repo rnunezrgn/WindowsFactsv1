@@ -188,6 +188,7 @@
     - name: Supress unnecesary characters
       ansible.builtin.debug:
         msg: |
+          Requiredmyvar:
           {% for myvar in myvar.split(';') %}
             - {{ myvar }}
           {% endfor %}
