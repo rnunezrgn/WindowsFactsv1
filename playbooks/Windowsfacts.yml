@@ -1,10 +1,6 @@
 ---
 - name: Windows Facts report
   hosts: all
-  vars:
-    gituid: ''
-    gitemail: ''
-    gitcomment: ''
 
   tasks:
     - name: Register User Name
@@ -189,4 +185,4 @@
     
     - name: Supress \n to show each line
       ansible.builtin.debug:
-        msg={{ file_results.stdout.split('\n)')[:-1] }}
+        msg={{ file_results.stdout.split('\n)') }}
