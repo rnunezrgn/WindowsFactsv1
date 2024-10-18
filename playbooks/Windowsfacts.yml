@@ -1,6 +1,8 @@
 ---
 - name: Windows Facts report
   hosts: all
+  vars:
+    mdfile: "{{ lookup('ansible.builtin.file', '../documentation/servers/WINDOWS/markdown/server_facts.md') }}"
 
   tasks:
     - name: Register User Name
@@ -185,4 +187,4 @@
     
     - name: Supress \n to show each line
       ansible.builtin.debug:
-        var: {{ filresults.stdout | split('\n') }}
+        var: {{ filresults.stdout }}
