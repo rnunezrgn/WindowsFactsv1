@@ -195,4 +195,4 @@
 
     - name: Supress \n to show each line
       ansible.builtin.debug:
-        msg: {{ myvar.split(";") }} 
+        var=myvar.stdout_split
