@@ -182,7 +182,6 @@
         - { property: '# Windows' }
       delegate_to: localhost
 
-    #- name: Create server_facts Mind Map.
-      #shell: "markmap --no-open ../documentation/servers/WINDOWS/markdown/server_facts.md -o ../documentation/SERVERS/WINDOWS/mindmap/server_facts.html"
-      #register: markmap
-      #delegate_to: localhost.
+    - name: Display file 
+      ansible.builtin.debug:
+        var: lookup('ansible.builtin.file', '../documentation/servers/WINDOWS/markdown/server_facts.md')
